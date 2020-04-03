@@ -27,4 +27,4 @@
 ## Credits
 A plugin by XenialDan, 2020
 
-Many thanks to @Muqsit for the request
+Many thanks to [@Muqsit](https://github.com/Muqsit) for the request
