@@ -1,0 +1,19 @@
+---
+name: ItemStylus
+main: xenialdan\ItemStylus\Loader
+version: 0.0.1
+api: ["3.11"]
+load: POSTWORLD
+authors:
+- XenialDan
+permissions:
+  itemStylus.command:
+    default: op
+    children:
+      itemStylus.command.cancel:
+        default: op
+      itemStylus.command.edit:
+        default: op
+      itemStylus.command.rename:
+        default: op
+...
