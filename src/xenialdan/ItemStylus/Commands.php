@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace xenialdan\ItemStylus;
 
+use InvalidStateException;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginCommand;
 use pocketmine\Player;
@@ -21,16 +24,16 @@ class Commands extends PluginCommand
 
     public function __construct(Plugin $plugin)
     {
-        parent::__construct("ItemStylus", $plugin);
-        $this->setPermission("itemStylus.command");
-        $this->setDescription("The main commands for ItemStylus");
+        parent::__construct('ItemStylus', $plugin);
+        $this->setPermission('itemStylus.command');
+        $this->setDescription('The main commands for ItemStylus');
 
         $this->loadSubCommand(new CancelSubCommand($plugin));
         $this->loadSubCommand(new RenameSubCommand($plugin));
         $this->loadSubCommand(new LoreSubCommand($plugin));
     }
 
-    private function loadSubCommand(SubCommand $command)
+    private function loadSubCommand(SubCommand $command): void
     {
         $this->commandObjects[] = $command;
         $commandId = count($this->commandObjects) - 1;
@@ -40,6 +43,13 @@ class Commands extends PluginCommand
         }
     }
 
+    /**
+     * @param CommandSender $sender
+     * @param string $commandLabel
+     * @param array $args
+     * @return bool|mixed
+     * @throws InvalidStateException
+     */
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
         if (!isset($args[0])) {
@@ -53,22 +63,27 @@ class Commands extends PluginCommand
         $canUse = $command->canUse($sender);
         if ($canUse) {
             if (!$command->execute($sender, $args)) {
-                $sender->sendMessage(TextFormat::YELLOW . "Usage: /itemStylus " . $command->getName() . TextFormat::BOLD . TextFormat::DARK_AQUA . " > " . TextFormat::RESET . TextFormat::YELLOW . $command->getUsage());
+                $sender->sendMessage(TextFormat::YELLOW . 'Usage: /itemStylus ' . $command->getName() . TextFormat::BOLD . TextFormat::DARK_AQUA . ' > ' . TextFormat::RESET . TextFormat::YELLOW . $command->getUsage());
             }
         } else if (!($sender instanceof Player)) {
-            $sender->sendMessage(TextFormat::RED . "Please run this command in-game.");
+            $sender->sendMessage(TextFormat::RED . 'Please run this command in-game.');
         } else {
-            $sender->sendMessage(TextFormat::RED . "You do not have permissions to run this command");
+            $sender->sendMessage(TextFormat::RED . 'You do not have permissions to run this command');
         }
         return true;
     }
 
-    private function sendHelp(CommandSender $sender)
+    /**
+     * @param CommandSender $sender
+     * @return bool
+     * @throws InvalidStateException
+     */
+    private function sendHelp(CommandSender $sender): bool
     {
-        $sender->sendMessage("===========[ItemStylus commands]===========");
+        $sender->sendMessage('===========[ItemStylus commands]===========');
         foreach ($this->commandObjects as $command) {
             if ($command->canUse($sender)) {
-                $sender->sendMessage(TextFormat::DARK_GREEN . "/itemStylus " . $command->getName() . TextFormat::BOLD . TextFormat::DARK_AQUA . " > " . TextFormat::RESET . TextFormat::DARK_GREEN . $command->getUsage() . ": " .
+                $sender->sendMessage(TextFormat::DARK_GREEN . '/itemStylus ' . $command->getName() . TextFormat::BOLD . TextFormat::DARK_AQUA . ' > ' . TextFormat::RESET . TextFormat::DARK_GREEN . $command->getUsage() . ': ' .
                     TextFormat::WHITE . $command->getDescription()
                 );
             }

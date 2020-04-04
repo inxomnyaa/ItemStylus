@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace xenialdan\ItemStylus\subcommand;
 
 use pocketmine\command\CommandSender;
@@ -11,29 +13,29 @@ use xenialdan\ItemStylus\Loader;
 class LoreSubCommand extends SubCommand
 {
 
-    const CHANGE_THE_TEXT_OF_THE_BOOK_TO_EDIT_THE_LORE_DROP_THE_BOOK_TO_STOP_EDITING = 'Change the text of the book to edit the lore. Drop the book to stop editing';
+    public const CHANGE_THE_TEXT_OF_THE_BOOK_TO_EDIT_THE_LORE_DROP_THE_BOOK_TO_STOP_EDITING = 'Change the text of the book to edit the lore. Drop the book to stop editing';
 
-    public function canUse(CommandSender $sender)
+    public function canUse(CommandSender $sender):bool
     {
-        return ($sender instanceof Player) and $sender->hasPermission("itemStylus.command.lore");
+        return ($sender instanceof Player) and $sender->hasPermission('itemStylus.command.lore');
     }
 
-    public function getUsage()
+    public function getUsage():string
     {
-        return "lore";
+        return 'lore';
     }
 
-    public function getName()
+    public function getName():string
     {
-        return "lore";
+        return 'lore';
     }
 
-    public function getDescription()
+    public function getDescription():string
     {
-        return "Edit the lore of an item";
+        return 'Edit the lore of an item';
     }
 
-    public function getAliases()
+    public function getAliases():array
     {
         return [];
     }
@@ -43,7 +45,7 @@ class LoreSubCommand extends SubCommand
      * @param array $args
      * @return bool
      */
-    public function execute(CommandSender $sender, array $args)
+    public function execute(CommandSender $sender, array $args):bool
     {
         /** @var Player $sender */
         Loader::$editingLore[$sender->getName()] = $sender->getInventory()->getHeldItemIndex();

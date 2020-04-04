@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace xenialdan\ItemStylus\subcommand;
 
+use InvalidStateException;
 use pocketmine\command\CommandSender;
 use pocketmine\plugin\Plugin;
 
@@ -19,40 +22,42 @@ abstract class SubCommand{
 	/**
 	 * @return Plugin
 	 */
-	public final function getPlugin(){
+	final public function getPlugin(): Plugin
+    {
 		return $this->plugin;
 	}
 
 	/**
 	 * @param CommandSender $sender
 	 * @return bool
+     * @throws InvalidStateException
 	 */
-	public abstract function canUse(CommandSender $sender);
+	abstract public function canUse(CommandSender $sender):bool ;
 
 	/**
 	 * @return string
 	 */
-	public abstract function getUsage();
+	abstract public function getUsage():string ;
 
 	/**
 	 * @return string
 	 */
-	public abstract function getName();
+	abstract public function getName():string ;
 
 	/**
 	 * @return string
 	 */
-	public abstract function getDescription();
+	abstract public function getDescription():string ;
 
 	/**
 	 * @return string[]
 	 */
-	public abstract function getAliases();
+	abstract public function getAliases():array ;
 
 	/**
 	 * @param CommandSender $sender
 	 * @param string[] $args
 	 * @return bool
 	 */
-	public abstract function execute(CommandSender $sender, array $args);
+	abstract public function execute(CommandSender $sender, array $args):bool ;
 }

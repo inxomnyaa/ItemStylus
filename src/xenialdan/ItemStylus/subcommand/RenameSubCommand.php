@@ -1,36 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace xenialdan\ItemStylus\subcommand;
 
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
-use xenialdan\ItemStylus\other\EditHighlightAllTask;
 
 class RenameSubCommand extends SubCommand
 {
 
-    public function canUse(CommandSender $sender)
+    public function canUse(CommandSender $sender):bool
     {
-        return ($sender instanceof Player) and $sender->hasPermission("itemStylus.command.rename");
+        return ($sender instanceof Player) and $sender->hasPermission('itemStylus.command.rename');
     }
 
-    public function getUsage()
+    public function getUsage():string
     {
-        return "rename <name>";
+        return 'rename <name>';
     }
 
-    public function getName()
+    public function getName():string
     {
-        return "rename";
+        return 'rename';
     }
 
-    public function getDescription()
+    public function getDescription():string
     {
-        return "Rename an item";
+        return 'Rename an item';
     }
 
-    public function getAliases()
+    public function getAliases():array
     {
         return [];
     }
@@ -40,16 +41,16 @@ class RenameSubCommand extends SubCommand
      * @param array $args
      * @return bool
      */
-    public function execute(CommandSender $sender, array $args)
+    public function execute(CommandSender $sender, array $args):bool
     {
-        $name = implode(" ", $args ?? []);
+        $name = implode(' ', $args ?? []);
         if (empty($args) || empty(trim(TextFormat::clean($name)))) {
-            $sender->sendMessage(TextFormat::RED . "You need to provide a name");
+            $sender->sendMessage(TextFormat::RED . 'You need to provide a name');
             return false;
         }
         /** @var Player $sender */
         if (($item = $sender->getInventory()->getItemInHand())->isNull()) {
-            $sender->sendMessage(TextFormat::RED . "You have no item in your hand");
+            $sender->sendMessage(TextFormat::RED . 'You have no item in your hand');
             return true;
         }
         $item->setCustomName(($name = TextFormat::colorize($name)));
