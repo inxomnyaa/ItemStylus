@@ -24,7 +24,7 @@ class Commands extends PluginCommand
 
     public function __construct(Plugin $plugin)
     {
-        parent::__construct('ItemStylus', $plugin);
+        parent::__construct('itemstylus', $plugin);
         $this->setPermission('itemStylus.command');
         $this->setDescription('The main commands for ItemStylus');
 
