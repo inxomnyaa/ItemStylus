@@ -54,6 +54,7 @@ class RenameSubCommand extends SubCommand
             return true;
         }
         $item->setCustomName(($name = TextFormat::colorize($name)));
+        $sender->getInventory()->setItemInHand($item);
         $sender->sendMessage(TextFormat::GREEN . "The item has been renamed to $name");
         return true;
     }

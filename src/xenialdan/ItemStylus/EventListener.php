@@ -31,7 +31,10 @@ class EventListener implements Listener
             return;
         }
         $text = explode(TextFormat::EOL, $event->getNewBook()->getPageText(0));
-        $player->getInventory()->getItem(Loader::$editingLore[$player->getName()])->setLore($text);
+        $index = Loader::$editingLore[$player->getName()];
+        $item = $player->getInventory()->getItem($index);
+        $item->setLore($text);
+        $player->getInventory()->setItem($index, $item);
         $player->sendMessage(TextFormat::GREEN . 'Lore successfully changed');
         $player->sendMessage(TextFormat::GREEN . 'Drop book to stop editing');
     }
