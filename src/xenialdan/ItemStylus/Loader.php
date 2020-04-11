@@ -28,7 +28,7 @@ class Loader extends PluginBase
     public function onEnable():void
     {
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-        $this->getServer()->getCommandMap()->register("itemstylus", new Commands($this));
+        $this->getServer()->getCommandMap()->register("ItemStylus", new Commands($this));
     }
 
     /**
